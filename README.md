@@ -159,11 +159,11 @@ flowchart LR
     Dev[Developer in VS Code] -->|Commands| Ext["VS Code Extension (Node/TS)"]
     Ext <--> |postMessage| Webview[React Webview UI]
     Ext -->|Octokit| GH[(GitHub Actions API)]
-    GH -->|Logs (ZIP)| Ext
-    Ext -->|Prompt & Logs| OpenAI[(OpenAI API)]
-    OpenAI -->|Analysis JSON| Ext
+    GH -- "Logs (ZIP)" --> Ext
+    Ext -- "Prompt & Logs" --> OpenAI[(OpenAI API)]
+    OpenAI -- "Analysis JSON" --> Ext
     Ext -->|Render| Webview
-    Webview -->|Show Summary/Root Cause/Fix| Dev
+    Webview -- "Show Summary/Root Cause/Fix" --> Dev
 
 ```
 
