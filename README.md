@@ -148,6 +148,112 @@ React 기반의 웹뷰 UI를 통해 워크플로우 목록과 실행 기록을 �
 
 </details>
 
+<details>
+<summary><strong>4. 워크플로우 실행 히스토리 조회</strong></summary>
+
+웹뷰의 'History' 탭에서 선택된 워크플로우의 과거 실행 기록을 목록 형태로 확인할 수 있습니다. 이를 통해 과거의 성공 및 실패 사례를 쉽게 추적할 수 있습니다.
+
+- **`src/webview-react-app/src/pages/History/History.tsx`**: `actionId`가 변경될 때마다 `getRunHistory` API를 호출하여 실행 기록을 가져오고, `HistoryTable` 컴포넌트를 통해 화면에 렌더링합니다.
+  ```typescript
+  // src/webview-react-app/src/pages/History/History.tsx
+  useEffect(() => {
+    if (actionId) {
+      setIsLoading(true);
+      getRunHistory(actionId)
+        .then(runs => {
+          setRunHistory(runs);
+        })
+        .catch(error => {
+          console.error('Failed to fetch run history:', error);
+          // In case of an error, use mock data
+          setRunHistory(mockRuns);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [actionId]);
+  ```
+- **`src/extension.ts`**: 프론트엔드로부터 `getRunHistory` 요청을 받으면, Octokit을 사용하여 GitHub API로부터 실제 실행 기록 데이터를 가져와 다시 프론트엔드로 전달합니다.
+  ```typescript
+  // src/extension.ts
+  // ...
+  case 'getRunHistory':
+      try {
+          // ...
+          const { data: runs } = await octokit.actions.listWorkflowRuns ({
+              owner: repo.owner,
+              repo: repo.repo,
+              workflow_id: workflowIdOrPath,
+              per_page: 10
+          });
+          
+          const runHistory = runs.workflow_runs.map(run => ({ /* ... */ }));
+          
+          panel.webview.postMessage ({
+              command: 'getRunHistoryResponse',
+              payload: runHistory
+          });
+      } catch (error) { /* ... */ }
+      break;
+  ```
+
+</details>
+
+<details>
+<summary><strong>5. GUI 기반 워크플로우 편집기</strong></summary>
+
+'Editor' 탭에서 워크플로우(`.yml`) 파일을 그래픽 사용자 인터페이스(GUI)를 통해 직관적으로 수정할 수 있습니다. 또한 'Advanced Mode'를 통해 원본 YAML 파일을 직접 편집하는 것도 가능합니다.
+
+- **`src/webview-react-app/src/pages/Editor/Editor.tsx`**: `getWorkflowFile` API를 통해 원본 YAML 파일 내용을 가져와 파싱하고, UI 상태를 업데이트합니다. 사용자가 'Save' 버튼을 누르면 `handleSave` 함수가 `saveWorkflowFile` API를 호출하여 변경 사항을 저장합니다.
+  ```typescript
+  // src/webview-react-app/src/pages/Editor/Editor.tsx
+  useEffect(() => {
+    if (actionId) {
+      setIsLoading(true);
+      getWorkflowFile(actionId)
+        .then(content => {
+          setWorkflowContent(content);
+          // TODO: Parse YAML and update state
+        })
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
+    }
+  }, [actionId]);
+
+  const handleSave = async () => {
+    if (!actionId || isSaving) return;
+    
+    setIsSaving(true);
+    try {
+      await saveWorkflowFile(actionId, workflowContent);
+      alert('Workflow saved successfully!');
+    } catch (err) {
+      alert('Failed to save workflow.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+  ```
+- **`src/extension.ts`**: `saveWorkflowFile` 요청을 받으면, Octokit을 사용하여 GitHub 레포지토리의 워크플로우 파일을 실제로 생성하거나 업데이트합니다.
+  ```typescript
+  // src/extension.ts
+  // ...
+  case 'saveWorkflowFile': {
+    try {
+      // ...
+      await upsertFile(octokit, repo, workflowPath, content, 'main');
+
+      panel.webview.postMessage ({
+        command: 'saveWorkflowFileResponse',
+        payload: { ok: true, path: workflowPath }
+      });
+    } catch (error: any) { /* ... */ }
+    break;
+  }
+
+</details>
+
 ---
 
 ## 🏛 시스템 아키텍처
