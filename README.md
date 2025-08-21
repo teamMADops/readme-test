@@ -155,15 +155,39 @@ React 기반의 웹뷰 UI를 통해 워크플로우 목록과 실행 기록을 �
 ### 1) 전체 흐름 (Mermaid Flowchart)
 
 ```mermaid
-flowchart LR
-    Dev[Developer in VS Code] -->|Commands| Ext["VS Code Extension (Node/TS)"]
-    Ext <--> |postMessage| Webview[React Webview UI]
-    Ext -->|Octokit| GH[(GitHub Actions API)]
+flowchart TD
+    %% 1. 역할별 그룹화 (Subgraph)
+    subgraph User Interface
+        direction LR
+        Dev[Developer in VS Code]:::user
+        Webview[React Webview UI]:::user
+    end
+
+    subgraph Core Logic
+        Ext["VS Code Extension (Node/TS)"]:::core
+    end
+
+    subgraph External Services
+        direction LR
+        GH[(GitHub Actions API)]:::service
+        OpenAI[(OpenAI API)]:::service
+    end
+    
+    %% 2. 데이터 흐름 정의
+    Dev -->|Commands| Ext
+    Ext <-->|postMessage & Render| Webview
+    Webview -->|Show Summary/Root Cause/Fix| Dev
+
+    Ext -->|Octokit| GH
     GH -- "Logs (ZIP)" --> Ext
-    Ext -- "Prompt & Logs" --> OpenAI[(OpenAI API)]
+
+    Ext -- "Prompt & Logs" --> OpenAI
     OpenAI -- "Analysis JSON" --> Ext
-    Ext -->|Render| Webview
-    Webview -- "Show Summary/Root Cause/Fix" --> Dev
+
+    %% 3. 시각적 스타일 정의 (classDef)
+    classDef user fill:#E1F5E1,stroke:#6BA46B,stroke-width:2px;
+    classDef core fill:#DAE8FC,stroke:#6C8EBF,stroke-width:2px;
+    classDef service fill:#f0f0f0,stroke:#999,stroke-width:2px;
 
 ```
 
