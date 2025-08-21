@@ -1,5 +1,5 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" version="28.1.0">
-  <diagram name="페이지-1" id="U96DuDwk4poEdV1lNyxc">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" version="28.1.0" pages="2">
+  <diagram name="전체 흐름 (Mermaid Flowchart)" id="U96DuDwk4poEdV1lNyxc">
     <mxGraphModel dx="1042" dy="527" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -83,6 +83,84 @@
             <Array as="points">
               <mxPoint x="845" y="372" />
               <mxPoint x="845" y="299" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="QAhSa-7ABV4evwOC89Yf" name="분석 시퀀스 (Mermaid Sequence)">
+    <mxGraphModel dx="1097" dy="555" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-1" value="User" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="150" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-2" value="VS Code Extension" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="318" y="20" width="159" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-3" value="GitHub Actions API" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="544" y="20" width="161" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-4" value="OpenAI GPT" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="755" y="20" width="150" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-5" value="실패 실행 선택 (Run ID)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-1" target="S0h_tNL1lOXidRt3tDV7-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="255" y="129" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-6" value="로그 ZIP 요청" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-2" target="S0h_tNL1lOXidRt3tDV7-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="519" y="183" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-7" value="로그 ZIP (Jobs/Steps)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-3" target="S0h_tNL1lOXidRt3tDV7-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="522" y="239" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-8" value="실패 Step 탐지 &amp; 관련 부분 추출" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-2" target="S0h_tNL1lOXidRt3tDV7-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="448" y="293" />
+              <mxPoint x="448" y="323" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-9" value="프롬프트 생성 (formatPrompt)" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-2" target="S0h_tNL1lOXidRt3tDV7-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="448" y="379" />
+              <mxPoint x="448" y="409" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-10" value="analyze(prompt, context)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-2" target="S0h_tNL1lOXidRt3tDV7-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="622" y="465" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-11" value="{summary, rootCause, fix}" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-4" target="S0h_tNL1lOXidRt3tDV7-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="625" y="521" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S0h_tNL1lOXidRt3tDV7-12" value="React Webview로 분석 결과 표시" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="S0h_tNL1lOXidRt3tDV7-2" target="S0h_tNL1lOXidRt3tDV7-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="258" y="575" />
             </Array>
           </mxGeometry>
         </mxCell>
